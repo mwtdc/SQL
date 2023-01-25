@@ -1,0 +1,13 @@
+SELECT t.time, SUM(t.Заряд) AS 'Заряд' from (
+SELECT a.DT AS "time", a.val+b.val AS "Заряд" from (SELECT * from PointMains where ID_PP=10527 and datepart(mi, DT)=00) a
+JOIN (SELECT * from PointMains where ID_PP=10527 and datepart(mi, DT)=30 and DT >= (select dateadd(day, -7, CONVERT (date, GETDATE())))) b ON a.DT = dateadd(mi, -30, b.DT)
+UNION ALL 
+SELECT a.DT AS "time", a.val+b.val AS "Заряд" from (SELECT * from PointMains where ID_PP=10531 and datepart(mi, DT)=00) a
+JOIN (SELECT * from PointMains where ID_PP=10531 and datepart(mi, DT)=30 and DT >= (select dateadd(day, -7, CONVERT (date, GETDATE())))) b ON a.DT = dateadd(mi, -30, b.DT)
+UNION ALL
+SELECT a.DT AS "time", a.val+b.val AS "Заряд" from (SELECT * from PointMains where ID_PP=10535 and datepart(mi, DT)=00) a
+JOIN (SELECT * from PointMains where ID_PP=10535 and datepart(mi, DT)=30 and DT >= (select dateadd(day, -7, CONVERT (date, GETDATE())))) b ON a.DT = dateadd(mi, -30, b.DT)
+UNION ALL
+SELECT a.DT AS "time", a.val+b.val AS "Заряд" from (SELECT * from PointMains where ID_PP=10539 and datepart(mi, DT)=00) a
+JOIN (SELECT * from PointMains where ID_PP=10539 and datepart(mi, DT)=30 and DT >= (select dateadd(day, -7, CONVERT (date, GETDATE())))) b ON a.DT = dateadd(mi, -30, b.DT)) t 
+GROUP BY t.time;
